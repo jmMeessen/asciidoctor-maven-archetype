@@ -1,0 +1,6 @@
+target/
+src/main/resources/archetype-resources/target/
+src/main/resources/archetype-resources/*.pdf
+*.*~
+*.swp
+.DS_Store

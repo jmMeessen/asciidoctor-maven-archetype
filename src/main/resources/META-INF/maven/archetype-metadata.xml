@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<archetype-descriptor 
+	xmlns="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0 http://maven.apache.org/xsd/archetype-descriptor-1.0.0.xsd"
+	name="asciidoctor-maven-archetype" partial="false" >
+
+  <fileSets>
+    <fileSet encoding="UTF8" >
+      <directory>src/doc/asciidoc</directory>
+      <includes>
+      	<include>document.adoc</include>
+      </includes>
+    </fileSet>
+    <fileSet>
+    	<directory>src/doc/docbkx/fo-stylesheets</directory>
+    	<includes>
+    		<include>demo.titlepage.templates.xml</include>
+    		<include>demo_titlepages.xsl</include>
+    		<include>docbook.xsl</include>
+		</includes>
+	</fileSet>
+	<fileSet>
+		<directory>src/doc/docbkx/fop-config</directory>
+		<includes>
+			<include>fop.xconf</include>
+		</includes>
+	</fileSet>	
+	<fileSet>
+		<directory>src/doc/docbkx/images</directory>
+		<includes>
+			<include>*.*</include>
+		</includes>
+	</fileSet>
+	<fileSet>
+		<directory>src/doc/media/images</directory>
+		<includes>
+			<include>*.*</include>
+		</includes>
+	</fileSet>
+	<fileSet>
+		<directory>src/doc/media/UML</directory>
+		<includes>
+			<include>*.*</include>
+		</includes>
+	</fileSet>
+	<fileSet>
+		<directory></directory>
+		<includes>
+			<include>README.txt</include>
+		</includes>
+	</fileSet>
+  </fileSets>
+
+</archetype-descriptor>

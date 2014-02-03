@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  
+  <groupId>${groupId}</groupId>
+  <artifactId>${artifactId}</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <name>Asciidoc generation</name>
+  <packaging>pom</packaging>
+
+  <prerequisites>
+    <maven>3.0.0</maven>
+  </prerequisites>
+
+  <!-- Some general definitions and parameters -->
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <!-- Version -->
+    <asciidoctor.version>0.1.4</asciidoctor.version>
+    <docbkx.version>2.0.14</docbkx.version>
+    <UMLet.version>1.1.6</UMLet.version>
+
+    <!-- global properties -->
+    <isDraft>yes</isDraft>  <!-- "yes" or "no" -->
+  </properties>
+
+
+  <build>
+    <plugins>
+
+      <!--
+         UMLet conversion 
+         documentation at: http://ykryshchuk.github.io/umlet-maven-plugin/
+       -->
+      <plugin>
+        <groupId>com.kryshchuk.maven.plugins</groupId>
+        <artifactId>umlet-maven-plugin</artifactId>
+        <version>${UMLet.version}</version>
+
+        <configuration>
+          <format>png</format>
+          <filesets>
+            <fileset>
+              <directory>${basedir}/src/doc/media/UML</directory>
+              <includes>
+                <include>*.uxf</include>
+              </includes>
+            </fileset>
+          </filesets>
+          <outputDirectory>${project.build.directory}/media</outputDirectory>
+        </configuration>
+        
+        <executions>
+          <execution>
+            <id>convert-uml-to-jpeg</id>
+            <phase>generate-resources</phase> 
+            <goals>
+              <goal>convert</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+
+      <!-- 
+        Asciidoctor plugin (asciidoc to docbook5) 
+       -->
+  		<plugin>
+    		<groupId>org.asciidoctor</groupId>
+        <artifactId>asciidoctor-maven-plugin</artifactId>
+        <version>${asciidoctor.version}</version> 
+				
+        <configuration>
+          <!-- Asciidoc source to be processed -->
+          <sourceDocumentName>document.adoc</sourceDocumentName>
+
+          <!-- Directory where the asciidoc sources are located
+               (here at the same level as the pom.xml) -->
+					<sourceDirectory>${basedir}/src/doc/asciidoc</sourceDirectory>
+          <imagesDir>${project.build.directory}/media/</imagesDir>
+
+          <!-- output type and directory -->
+          <backend>docbook5</backend>
+          <outputDirectory>${project.build.directory}/docbook</outputDirectory>
+
+          <!-- Document type -->
+          <doctype>article</doctype>
+				</configuration>
+
+        <executions>
+          <execution>
+            <id>output-docbook</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>process-asciidoc</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!--
+        docbkx plugin (docbook to PDF)
+      -->
+      <plugin>
+        <groupId>com.agilejava.docbkx</groupId>
+        <artifactId>docbkx-maven-plugin</artifactId>
+        <version>${docbkx.version}</version>
+				<dependencies>
+          <!-- Docbook definition -->
+					<dependency>
+						<groupId>net.sf.docbook</groupId>
+						<artifactId>docbook-xml</artifactId>
+						<version>5.0-all</version>
+						<classifier>resources</classifier>
+						<type>zip</type>
+						<scope>runtime</scope>
+					</dependency>
+          <!-- XSLT syntax highlighting -->
+					<dependency>
+						<groupId>net.sf.xslthl</groupId>
+						<artifactId>xslthl</artifactId>
+						<version>2.0.1</version>
+						<scope>runtime</scope>
+					</dependency>
+          <!-- FOP hyphenation module -->
+					<dependency>
+						<groupId>net.sf.offo</groupId>
+						<artifactId>fop-hyph</artifactId>
+						<version>1.2</version>
+						<scope>runtime</scope>
+					</dependency>
+				</dependencies>
+
+        <executions>
+          <execution>
+             <phase>compile</phase>
+            <goals>
+              <goal>generate-pdf</goal>
+            </goals>
+          </execution>
+        </executions>
+
+        <!-- docbkx configuration -->        
+        <configuration>
+          <!-- location of the docbook sources -->
+          <sourceDirectory>${project.build.directory}/docbook</sourceDirectory>
+          <includes>*.xml</includes>
+          <imgSrcPath>${basedir}src/doc/media</imgSrcPath>
+
+          <!-- output directory -->
+          <targetDirectory>${project.build.directory}/pdf</targetDirectory>
+
+          <!-- Docbook/FOP customization -->
+          <foCustomization>${basedir}/src/doc/docbkx/fo-stylesheets/docbook.xsl</foCustomization>
+          <externalFOPConfiguration>${basedir}/src/doc/docbkx/fop-config/fop.xconf</externalFOPConfiguration>
+
+
+          <!-- "Draft" processing control -->
+          <draftMode>${isDraft}</draftMode>
+          <draftWatermarkImage>${basedir}/src/doc/docbkx/images/draft.jpg</draftWatermarkImage>
+
+          <!-- Admonastation control -->
+          <admonGraphics>true</admonGraphics>
+          <admonTextlabel>false</admonTextlabel>
+
+          <!-- other docbkx configuration -->
+          <paperType>A4</paperType>
+          <highlightSource>1</highlightSource>
+          <ulinkShow>0</ulinkShow>
+
+          <!-- FOP customization parameters -->
+          <customizationParameters>
+            <parameter>
+              <name>header.image.filename</name>
+              <value>${basedir}/src/doc/docbkx/images/AsciidoctorLogoSmall.jpeg</value>
+            </parameter>
+            <parameter>
+              <name>admon.graphics.path</name>
+              <value>${basedir}/src/doc/docbkx/images/</value>
+            </parameter>
+            <parameter>
+              <name>admon.graphics.extension</name>
+              <value>.jpg</value>
+            </parameter>
+          </customizationParameters>
+
+        </configuration>
+      </plugin>
+
+
+      <!-- 
+        Plugin to copy things around during the build process
+      -->
+      <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>2.6</version>
+        <executions> 
+
+          <!-- copy static images to the build image directory -->
+          <execution>
+            <id>copy-staticImages</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/media</outputDirectory>
+              <resources>          
+                <resource>
+                  <directory>${basedir}/src/doc/media/images</directory>
+                  <includes>
+                    <include>*.*</include>
+                  </includes>
+                </resource>
+              </resources>              
+            </configuration>            
+          </execution>
+
+          <!-- copy generated PDF back to the root -->
+          <execution>
+            <id>copy-resources</id>
+            <phase>install</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${basedir}</outputDirectory>
+              <resources>          
+                <resource>
+                  <directory>${project.build.directory}/pdf</directory>
+                  <includes>
+                    <include>*.pdf</include>
+                  </includes>
+                </resource>
+              </resources>              
+            </configuration>            
+          </execution>
+
+        </executions>
+      </plugin>
+
+    </plugins>
+  </build>
+
+</project>
