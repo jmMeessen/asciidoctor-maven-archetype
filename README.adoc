@@ -1,0 +1,103 @@
+= About this Asciidoctor maven archetype =
+
+This maven project creates a maven archetype. 
+
+The above mentioned archetype simplifies the creation of a documentation project that will produce a PDF based on an asciidoc source. It will create a sample document that, besides showing several useful asciidoc(tor) feature, documents how the demo build pipeline works and where to start to customize it.
+
+[NOTE]
+====
+As this relates to Maven tooling, it is assumed that you have a working Maven configuration. You can verify that by using `mvn -version` from the command prompt. For the UMLet conversion to work correctly, Maven should be using Java 1.7.
+====
+
+
+
+== Building the archetype ==
+
+To build the archetype and have it available in your local archetype library follow these steps:
+
+* Clone this repository and move to the created directory
+* type the command `mvn install`
+* And voilà: the archetype is now available in your local archetype catalog.
+
+== Using the archetype ==
+
+Once the archetype is available either in your local catalog or in a repository, you create the demo project with:
+
+----
+mvn archetype:generate -Dfilter=asciidoctor-maven-archetype
+----
+
+This will start the interactive user interface where you can choose the archetype version you want to use. It will prompt you for the *groupId*, *artifactId* and propose default values for the artifact version and package (that you accept with <enter>).
+
+Your sample project is generated in a subdirectory named after the artifactId under the current directory.
+
+See the `archetype:generate` documentation for all the options that can be used to generate a project from a Maven archetype.
+
+
+----
+$ mvn archetype:generate -Dfilter=asciidoctor-maven-archetype
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Maven Stub Project (No POM) 1
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] >>> maven-archetype-plugin:2.2:generate (default-cli) @ standalone-pom >>>
+[INFO] 
+[INFO] <<< maven-archetype-plugin:2.2:generate (default-cli) @ standalone-pom <<<
+[INFO] 
+[INFO] --- maven-archetype-plugin:2.2:generate (default-cli) @ standalone-pom ---
+[INFO] Generating project in Interactive mode
+[INFO] No archetype defined. Using maven-archetype-quickstart (org.apache.maven.archetypes:maven-archetype-quickstart:1.0)
+Choose archetype:
+1: local -> org.asciidoctor:asciidoctor-maven-archetype (Asciidoctor Maven Archetype - V1.0-SNAPSHOT)
+Choose a number or apply filter (format: [groupId:]artifactId, case sensitive contains): : ^C~/work 
+13:52 $ mvn archetype:generate -Dfilter=asciidoctor-maven-archetype
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Maven Stub Project (No POM) 1
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] >>> maven-archetype-plugin:2.2:generate (default-cli) @ standalone-pom >>>
+[INFO] 
+[INFO] <<< maven-archetype-plugin:2.2:generate (default-cli) @ standalone-pom <<<
+[INFO] 
+[INFO] --- maven-archetype-plugin:2.2:generate (default-cli) @ standalone-pom ---
+[INFO] Generating project in Interactive mode
+[INFO] No archetype defined. Using maven-archetype-quickstart (org.apache.maven.archetypes:maven-archetype-quickstart:1.0)
+Choose archetype:
+1: local -> org.asciidoctor:asciidoctor-maven-archetype (Asciidoctor Maven Archetype - V1.0-SNAPSHOT)
+Choose a number or apply filter (format: [groupId:]artifactId, case sensitive contains): : 1
+Define value for property 'groupId': : org.asciidoctor
+Define value for property 'artifactId': : demo
+Define value for property 'version':  1.0-SNAPSHOT: : 
+Define value for property 'package':  org.asciidoctor: : 
+Confirm properties configuration:
+groupId: org.asciidoctor
+artifactId: demo
+version: 1.0-SNAPSHOT
+package: org.asciidoctor
+ Y: : y
+[INFO] ----------------------------------------------------------------------------
+[INFO] Using following parameters for creating project from Archetype: asciidoctor-maven-archetype:1.0-SNAPSHOT
+[INFO] ----------------------------------------------------------------------------
+[INFO] Parameter: groupId, Value: org.asciidoctor
+[INFO] Parameter: artifactId, Value: demo
+[INFO] Parameter: version, Value: 1.0-SNAPSHOT
+[INFO] Parameter: package, Value: org.asciidoctor
+[INFO] Parameter: packageInPathFormat, Value: org/asciidoctor
+[INFO] Parameter: package, Value: org.asciidoctor
+[INFO] Parameter: version, Value: 1.0-SNAPSHOT
+[INFO] Parameter: groupId, Value: org.asciidoctor
+[INFO] Parameter: artifactId, Value: demo
+[INFO] project created from Archetype in dir: /Users/jmm/work/demo
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 2:45.650s
+[INFO] Finished at: Mon Feb 03 13:55:10 CET 2014
+[INFO] Final Memory: 13M/156M
+[INFO] ------------------------------------------------------------------------
+----
+
