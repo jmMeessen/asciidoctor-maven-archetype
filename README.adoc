@@ -1,8 +1,6 @@
-= About this Asciidoctor maven archetype =
+= Asciidoctor Maven archetype =
 
-This maven project creates a maven archetype. 
-
-The above mentioned archetype simplifies the creation of a documentation project that will produce a PDF based on an asciidoc source. It will create a sample document that, besides showing several useful asciidoc(tor) feature, documents how the demo build pipeline works and where to start to customize it.
+This project creates a maven archetype that can be used to simplify the setup of a Maven document project to produce PDFs based on asciidoc sources. It uses a sample document that, besides showing several useful asciidoc(tor) features, documents how the demo build pipeline works and where to start to customize it.
 
 [NOTE]
 ====
@@ -31,11 +29,11 @@ This will start the interactive user interface where you can choose the archetyp
 
 Your sample project is generated in a subdirectory named after the artifactId under the current directory.
 
-See the `archetype:generate` documentation for all the options that can be used to generate a project from a Maven archetype.
+See the `archetype:generate` documentation for all the options that can be used to generate a project from a Maven archetypes.
 
-
+.sample project creation with the archetype
 ----
-$ mvn archetype:generate -Dfilter=asciidoctor-maven-archetype
+$ mvn archetype:generate -Dfilter=asciidoctor-maven-archetype <1>
 [INFO] Scanning for projects...
 [INFO]                                                                         
 [INFO] ------------------------------------------------------------------------
@@ -51,34 +49,17 @@ $ mvn archetype:generate -Dfilter=asciidoctor-maven-archetype
 [INFO] No archetype defined. Using maven-archetype-quickstart (org.apache.maven.archetypes:maven-archetype-quickstart:1.0)
 Choose archetype:
 1: local -> org.asciidoctor:asciidoctor-maven-archetype (Asciidoctor Maven Archetype - V1.0-SNAPSHOT)
-Choose a number or apply filter (format: [groupId:]artifactId, case sensitive contains): : ^C~/work 
-13:52 $ mvn archetype:generate -Dfilter=asciidoctor-maven-archetype
-[INFO] Scanning for projects...
-[INFO]                                                                         
-[INFO] ------------------------------------------------------------------------
-[INFO] Building Maven Stub Project (No POM) 1
-[INFO] ------------------------------------------------------------------------
-[INFO] 
-[INFO] >>> maven-archetype-plugin:2.2:generate (default-cli) @ standalone-pom >>>
-[INFO] 
-[INFO] <<< maven-archetype-plugin:2.2:generate (default-cli) @ standalone-pom <<<
-[INFO] 
-[INFO] --- maven-archetype-plugin:2.2:generate (default-cli) @ standalone-pom ---
-[INFO] Generating project in Interactive mode
-[INFO] No archetype defined. Using maven-archetype-quickstart (org.apache.maven.archetypes:maven-archetype-quickstart:1.0)
-Choose archetype:
-1: local -> org.asciidoctor:asciidoctor-maven-archetype (Asciidoctor Maven Archetype - V1.0-SNAPSHOT)
-Choose a number or apply filter (format: [groupId:]artifactId, case sensitive contains): : 1
-Define value for property 'groupId': : org.asciidoctor
-Define value for property 'artifactId': : demo
-Define value for property 'version':  1.0-SNAPSHOT: : 
-Define value for property 'package':  org.asciidoctor: : 
+Choose a number or apply filter (format: [groupId:]artifactId, case sensitive contains): : 1  <2>
+Define value for property 'groupId': : org.asciidoctor    <3>
+Define value for property 'artifactId': : demo            <4>
+Define value for property 'version':  1.0-SNAPSHOT: :     <5>
+Define value for property 'package':  org.asciidoctor: :  <6>
 Confirm properties configuration:
 groupId: org.asciidoctor
 artifactId: demo
 version: 1.0-SNAPSHOT
 package: org.asciidoctor
- Y: : y
+ Y: : y                                                   <7>
 [INFO] ----------------------------------------------------------------------------
 [INFO] Using following parameters for creating project from Archetype: asciidoctor-maven-archetype:1.0-SNAPSHOT
 [INFO] ----------------------------------------------------------------------------
@@ -101,3 +82,10 @@ package: org.asciidoctor
 [INFO] ------------------------------------------------------------------------
 ----
 
+<1> The command to start the generation.
+<2> Only one archetype was found (V1.0-SNAPSHOT). Enter the number of the archetype ("1" in this case).
+<3> Enter the 'groupId' of your project.
+<4> Enter the 'artifactId' or name of your project.
+<5> Accept the proposed default 'version' by pressing enter.
+<6> Accept the proposed default 'package' name by pressing enter.
+<7> Confirm the parameters with 'y' to start the generation of the project.
