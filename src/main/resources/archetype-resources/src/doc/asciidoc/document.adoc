@@ -79,9 +79,17 @@ Find hereafter an overview of the directory structure:
 .Asciidoctor PDF Maven directories overview
 image::directories.png["directories", 320, align="right"]
 
-=== Integrating UML graphics ===
+<<<
 
-This demonstration document shows how to generate UML images on the fly. Images are edited with the UMLetfootnote:[Open source software, under GNU GPL license] tool. For more details, check out the UMLet site (http://www.umlet.com).
+=== Integrating UML graphics and other pictures ===
+
+Integrating static pictures in a document is straight forward as can be seen below. 
+
+[[samplePicture]]
+.A sample picturefootnote:[Sample picture from site http://www.zend.com/fr/community/zend-developer-pulse-summer-2012]
+image::Zend-Developer-Pulse-survey-Q2-2012-Graph-06.jpg[sample, 400, align="right"]
+
+The previous pages of this document also show how to integrate UML images generated on the fly. The UML graphics are edited with the UMLetfootnote:[Open source software, under GNU GPL license] tool. For more details, check out the UMLet site (http://www.umlet.com).
 
 The Maven integration of UMLet is done with the umlet-maven-plugin. For more details, check out the plug-in site (http://ykryshchuk.github.io/umlet-maven-plugin).
 
